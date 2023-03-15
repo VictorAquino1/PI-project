@@ -1,44 +1,50 @@
-import time 
 from sys import getsizeof
 import matplotlib.pyplot as plt
-sizes = range(10000, 600000, 100000)
+import time
+import random
+import mysql.connector
+
+
+# informações de conexão com o banco de dados
+host = 'localhost'
+user = 'root'
+password = '1234'
+database = 'algas'
+
+# conectando ao banco de dados
+cnx = mysql.connector.connect(host=host, user=user, password=password, database=database)
+cursor = cnx.cursor()
+
+sizes = {range(0, 100, 10),
+         range(1000, 6000, 1000),
+         range(1000, 6000, 100)
+         }
+
+"""
+sizes = {range(1000, 6000, 1000)}
+"""
+
+#Gerar numeros entre 0mm ate 100mm 
 l1 = []
+for x in sizes:
+    print(x)
+    for y in x:
+        start = time.time()
+        sensorValue = random.randint(0, 100)
+        print(f"Valor do sensor = {sensorValue}")
+        insert_query = f"INSERT INTO sensor (valor) VALUES ({sensorValue})"
+        cursor.execute(insert_query)
+        cnx.commit()
+        print(getsizeof(sensorValue))
+        stop = time.time()
+        l1.append(stop - start)
+        plt.plot(l1, 'y')
+        print(f"memory view var l1 = {getsizeof(l1)}")
 
-for n in sizes:
-    data = 'x' * n
-    b = data 
-    start = time.time()
-    max_mem = 0
-    min_mem = 0
-    while b:
-        if n== len(b):
-            max_mem = getsizeof(b) - getsizeof('')
-        elif len(b) == 1:
-            min_mem = getsizeof(b) - getsizeof('')
-        b = b[1:]
-    stop = time.time()
-    print(f'valor {n} {stop - start} - max mem {max_mem/10**3} KB - Min mem {min_mem} B')
-    l1.append(stop-start)
-l2 = []
-for n in sizes:
-    data = b'x' * n
-    b = memoryview(data)
-    start = time.time()
-    max_mem = 0
-    min_mem = 0
-    while b:
-        if n == len(b):
-            max_mem = getsizeof(b) - getsizeof('')
-        elif len(b) == 1:
-            min_mem = getsizeof(b) - getsizeof('')
-        b = b[1:]
-    stop = time.time()
-    print(f'valor {n} {stop - start} - max mem {max_mem/10**3} KB - Min mem {min_mem} B')
-    l2.append(stop-start)
-
-plt.plot(l1, 'x-', label='whithout Memoryview')    
-plt.plot(l2, 'o--', label='whith Memoryview')    
-plt.xlabel('Size of Bytearray')
-plt.ylabel('Time (s)')
-plt.legend()
+print(f"Valor dos sensores = {l1}")
+print(f"tamanho final do array = {len(l1)}")
+#MUDAR AS CORES DE ACORDO COM A RANGE QUE MUDA
+#EXPORTAR CSV DOS DADOS
+plt.xlabel('Tamanho do array')
+plt.ylabel('Time (S)')
 plt.show()
