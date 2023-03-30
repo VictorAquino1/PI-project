@@ -16,14 +16,18 @@ database = 'algas'
 cnx = mysql.connector.connect(host=host, user=user, password=password, database=database)
 cursor = cnx.cursor()
 # Range de inserção de dados
-sizes = {range(0, 100, 10),
+sizes = {
+         range(0, 100, 10),
          range(1000, 6000, 1000),
          range(1000, 6000, 100),
-         range(1000, 6000, 10)
+         range(1000, 6000, 10),
+         range(100, 600, 10)
         }
-#Gerar numeros entre 0mm ate 100mm 
+
+#Gerar numeros entre 0mm ate 100mm do sensor BIM-EM12E-Y1X
 l1 = []
 l2 = []
+
 for x in sizes:
     print(x)
     for y in x:
@@ -38,7 +42,7 @@ for x in sizes:
         size = getsizeof(l1)
         l1.append(delta)
         l2.append(getsizeof(l1))
-        insert_query = f"INSERT INTO machineData (time, space) VALUES ({delta}, {size})"
+        insert_query = f"INSERT INTO machineData (time, space, data) VALUES ({delta}, {size}, now())"
         cursor.execute(insert_query)
         cnx.commit()
         print(f"getSizeof(l1) = {getsizeof(l1)}")
