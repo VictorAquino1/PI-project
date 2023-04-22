@@ -3,7 +3,7 @@ from sys import getsizeof
 import matplotlib.pyplot as plt
 import time
 import random
-import mysql.connector
+import pyodbc 
 import csv
 
 # informações de conexão com o banco de dados
@@ -12,16 +12,15 @@ user = 'root'
 password = '1234'
 database = 'algas'
 
+
 # conectando ao banco de dados
-cnx = mysql.connector.connect(host=host, user=user, password=password, database=database)
-cursor = cnx.cursor()
+
+conn_string = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:gp05-monitoramento.database.windows.net,1433;Database=gp05-monitoramento;Uid=gp-05;Pwd={#Gf51451488874};Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;"
+conn = pyodbc.connect(conn_string)
+cursor = conn.cursor()
 # Range de inserção de dados
 sizes = {
-         range(0, 100, 10),
-         range(1000, 6000, 1000),
-         range(1000, 6000, 100),
-         range(1000, 6000, 10),
-         range(100, 600, 10)
+         range(0, 2),
         }
 
 #Gerar numeros entre 0mm ate 100mm do sensor BIM-EM12E-Y1X
@@ -34,17 +33,17 @@ for x in sizes:
         start = time.time()
         sensorValue = random.randint(0, 100)
         print(f"Valor do sensor = {sensorValue}")
-        insert_query = f"INSERT INTO sensor (valor, data) VALUES ({sensorValue}, now())"
+        insert_query = f"INSERT INTO sensor (valor, data) VALUES ({sensorValue}, GETDATE())"
         cursor.execute(insert_query)
-        cnx.commit()
+        cursor.commit()
         stop = time.time()
         delta = stop - start
         size = getsizeof(l1)
         l1.append(delta)
         l2.append(getsizeof(l1))
-        insert_query = f"INSERT INTO machineData (time, space, data) VALUES ({delta}, {size}, now())"
+        insert_query = f"INSERT INTO machineData (time, space, data) VALUES ({delta}, {size}, GETDATE())"
         cursor.execute(insert_query)
-        cnx.commit()
+        cursor.commit()
         print(f"getSizeof(l1) = {getsizeof(l1)}")
 
     fig, (ax1, ax2) = plt.subplots(2)
