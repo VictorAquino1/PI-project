@@ -9,12 +9,8 @@ count = cursor.execute(querry)
 time = []
 space = []
 for x in count:
-    space.append(x.space) 
-    print(x.space)
-
-for x in count:
-    time.append(x.time) 
-    print(x.time)
+    space.append(x.space)
+    time.append(x.time)
 
 # Machine data
 querry = "SELECT TOP (1000) * FROM [dbo].[sensor] where locationAz = 3;"
@@ -24,15 +20,12 @@ valor = []
 id = []
 for x in count:
     valor.append(x.valor) 
-
-for x in count:
     id.append(x.id) 
 
 fig, axs = plt.subplots(2)
-fig.suptitle('sensor BIM-EM12E-Y1X - AWS(east-1e)')
-axs[0].plot(space)
-axs[0].set_title("Grafico do tempo x espaco")
+fig.suptitle('sensor BIM-EM12E-Y1X - US east(1e)')
+axs[0].plot(time)
+axs[0].set_title("Grafico do tempo")
 axs[1].plot(valor)
 axs[1].set_title("Simulação dos dados do sensor")
 plt.show()
-

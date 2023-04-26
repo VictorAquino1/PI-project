@@ -31,6 +31,7 @@ for x in sizes:
         sensorValue = random.randint(0, 100)
         print(f"Valor do sensor = {sensorValue}")
         insert_query = f"INSERT INTO sensor (valor, data, locationAz) VALUES ({sensorValue}, GETDATE(), 2)"
+        time.sleep(5000)
         cursor.execute(insert_query)
         cursor.commit()
         stop = time.time()
