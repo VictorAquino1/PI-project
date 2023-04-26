@@ -30,7 +30,7 @@ for x in sizes:
         start = time.time()
         sensorValue = random.randint(0, 100)
         print(f"Valor do sensor = {sensorValue}")
-        insert_query = f"INSERT INTO sensor (valor, data) VALUES ({sensorValue}, GETDATE())"
+        insert_query = f"INSERT INTO sensor (valor, data, locationAz) VALUES ({sensorValue}, GETDATE(), 1)"
         cursor.execute(insert_query)
         cursor.commit()
         stop = time.time()
@@ -38,7 +38,7 @@ for x in sizes:
         size = getsizeof(l1)
         l1.append(delta)
         l2.append(getsizeof(l1))
-        insert_query = f"INSERT INTO machineData (time, space, data) VALUES ({delta}, {size}, GETDATE())"
+        insert_query = f"INSERT INTO machineData (time, space, data, locationAz) VALUES ({delta}, {size}, GETDATE(), 1)"
         cursor.execute(insert_query)
         cursor.commit()
         print(f"getSizeof(l1) = {getsizeof(l1)}")
