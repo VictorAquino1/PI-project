@@ -17,7 +17,7 @@ conn = pyodbc.connect(conn_string)
 cursor = conn.cursor()
 # Range de inserção de dados
 sizes = {
-         range(0, 2),
+         range(0, 49),
         }
 
 #Gerar numeros entre 0mm ate 100mm do sensor BIM-EM12E-Y1X
