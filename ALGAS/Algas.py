@@ -17,7 +17,7 @@ conn = pyodbc.connect(conn_string)
 cursor = conn.cursor()
 # Range de inserção de dados
 sizes = {
-         range(0, 49),
+         range(0, 51),
         }
 
 #Gerar numeros entre 0mm ate 100mm do sensor BIM-EM12E-Y1X
@@ -30,7 +30,7 @@ for x in sizes:
         start = time.time()
         sensorValue = random.randint(0, 100)
         print(f"Valor do sensor = {sensorValue}")
-        insert_query = f"INSERT INTO sensor (valor, data, locationAz) VALUES ({sensorValue}, GETDATE(), 3)"
+        insert_query = f"INSERT INTO sensor (valor, data, locationAz) VALUES ({sensorValue}, GETDATE(), 2)"
         cursor.execute(insert_query)
         cursor.commit()
         stop = time.time()
@@ -38,7 +38,7 @@ for x in sizes:
         size = getsizeof(l1)
         l1.append(delta)
         l2.append(getsizeof(l1))
-        insert_query = f"INSERT INTO machineData (time, space, data, locationAz) VALUES ({delta}, {size}, GETDATE(), 3)"
+        insert_query = f"INSERT INTO machineData (time, space, data, locationAz) VALUES ({delta}, {size}, GETDATE(), 2)"
         cursor.execute(insert_query)
         cursor.commit()
         print(f"getSizeof(l1) = {getsizeof(l1)}")
