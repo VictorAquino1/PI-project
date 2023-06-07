@@ -36,8 +36,7 @@ frases = ler_arquivo("frases.txt")
 
 if frases:
     frases_array = [frase.strip() for frase in frases]
-    print(f"Frases lidas do arquivo '{nome_arquivo}':")
-    print(frases_array)
+   
 else:
     print("Não foram encontradas frases no arquivo.")
 

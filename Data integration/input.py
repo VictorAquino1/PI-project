@@ -2,12 +2,12 @@ import pyodbc
 import csv
 import requests
 
-query = 'SELECT * FROM dbo.sensor'
+query = "SELECT * FROM SensorData WHERE SensorName = 'proximidade' "
 
-csv_filename = 'resultado.csv'
+csv_filename = 'resultado-victor.csv'
 
 # Colocar sua connection string 
-conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=tcp:gp05-monitoramento.database.windows.net,1433;Database=gp05-monitoramento;Uid=gp-05;Pwd={#Gf51451488874};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;')
+conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=tcp:wordserver.database.windows.net,1433;Database=word-database;Uid=urubu100;Pwd=14052002Kb4_;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;')
 
 # Executa a consulta SQL
 cursor = conn.cursor()
@@ -37,8 +37,8 @@ conn.close()
 
 import requests
 
-url = 'https://evbt1pfmeh.execute-api.us-east-1.amazonaws.com/dev/grupo05-sparkb/resultado.csv'  # URL do endpoint para onde o arquivo será enviado
-arquivo = r'C:\Users\victo\Documents\Reps\PI-project\Data integration\resultado.csv'  # Caminho do arquivo que será enviado
+url = 'https://evbt1pfmeh.execute-api.us-east-1.amazonaws.com/dev/grupo05-sparkb/resultado-victor.csv'  # URL do endpoint para onde o arquivo será enviado
+arquivo = r'C:\Users\victo\Documents\Reps\PI-project\Data integration\resultado-victor.csv'  # Caminho do arquivo que será enviado
 
 # Configurar os cabeçalhos da requisição (opcional)
 headers = {'Content-Type': 'application/octet-stream'}
